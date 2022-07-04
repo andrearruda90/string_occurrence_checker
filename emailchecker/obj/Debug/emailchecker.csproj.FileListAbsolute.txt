@@ -10,3 +10,16 @@ C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.csp
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.exe
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.pdb
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.ResolveComReference.cache
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.AssemblyReference.cache
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.SuggestedBindingRedirects.cache
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.ResolveComReference.cache
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.Form1.resources
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.Properties.Resources.resources
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.GenerateResource.cache
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.CoreCompileInputs.cache
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.exe
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.pdb
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\emailchecker.exe.config
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\emailchecker.exe
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\emailchecker.pdb
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll

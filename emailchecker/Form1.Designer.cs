@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
+using System.Runtime;
 
 namespace emailchecker
 {
