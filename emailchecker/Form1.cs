@@ -60,6 +60,7 @@ namespace emailchecker
             ofd.Filter = "xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)|*.xls|All files (*.*)|*.*";
             ofd.ShowDialog();
             textBox1.Text = ofd.FileName;
+            //find here input adress
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -143,14 +144,6 @@ namespace emailchecker
                 listView1.Items.Add(strAllLines[i]);
             }
         }
-
-
     }
-
-    //public partial class Form1 : Form
-    //{
-
-
-    //}
 }
 
