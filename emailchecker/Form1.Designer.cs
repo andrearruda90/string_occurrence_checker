@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Runtime;
 using System.Configuration;
 
+
 namespace emailchecker
 {
 
@@ -293,23 +294,27 @@ namespace emailchecker
 
 
 
+                //passing every listview1.Item to a new string list
 
-                
-                
-                    int count = 1;
-                    do
+                var listItem = new List<string>();
+
+                foreach(ListViewItem lisViewItem in this.listView1.Items)
+                {
+                    listItem.Add(lisViewItem.Text);
+                }
+
+                // reading cells to checkup if they match with listitems
+                int count = 1;
+                do
+                {
+                    if (listItem.Any(s=>excel.ReadCell(count, 1).ToString().Contains(s)) == true)
                     {
-                        foreach (ListViewItem listViewItem in this.listView1.Items)
-                        {
-                            if (excel.ReadCell(count, 1).ToString().Contains(listViewItem.Text) == true)
-                            {
-                                excel.WriteCell(excel.ReadCell(count, 1), count, 1); //WriteCell(value,line,column)
-                                                    //were 1 = 2
-                            }
-                        }
-                         count++;   
-                    } while (count <= excel.LastRow());
-                
+                        excel.WriteCell(excel.ReadCell(count, 1), count, 1); //WriteCell(value,line,column)
+                                                                             //                                                             //were 1 = 2
+                    }
+                    count++;
+                } while (count <= 5000); //excel.LastRow()
+
 
 
 

@@ -1,9 +1,8 @@
-@yahoo
-@msn
+yahoo
 @hotmail
-@todimo
-@andre
-@teste
-@naosei
-@naopossui
-@@
+73
+smith
+58
+roob
+good
+35
