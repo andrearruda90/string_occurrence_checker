@@ -12,8 +12,7 @@ using System.Xml.Serialization;
 using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
-
-
+using System.Configuration;
 
 namespace emailchecker
 {
@@ -47,6 +46,8 @@ namespace emailchecker
             //setting up listView2 items
             OpenLstvwItems();
 
+            //SetSetting("outputPath", "Empty");
+            //SetSetting("outputFilename", "Empty");
             // Set to details view.
             listView1.View = View.Details;
             // Add a column with width 20 and left alignment.
@@ -57,9 +58,23 @@ namespace emailchecker
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Configuration configuration =
+            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             ofd.Filter = "xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)|*.xls|All files (*.*)|*.*";
             ofd.ShowDialog();
             textBox1.Text = ofd.FileName;
+
+            string fileName = Path.GetFileName(textBox1.Text);
+            string fileNameWExt = Path.GetFileNameWithoutExtension(textBox1.Text);
+
+            textBox2.Text = textBox1.Text.Replace($@"\{fileName}", "");
+
+            SetSetting("outputFilename", $@"\{fileNameWExt} - Analisado{fileName.Replace(fileName, "")}");
+            
+            SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
+            //MessageBox.Show(fileName);
+            // insert input path 
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -143,14 +158,6 @@ namespace emailchecker
                 listView1.Items.Add(strAllLines[i]);
             }
         }
-
-
     }
-
-    //public partial class Form1 : Form
-    //{
-
-
-    //}
 }
 

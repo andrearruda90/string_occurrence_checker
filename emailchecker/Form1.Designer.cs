@@ -13,6 +13,7 @@ using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 using System.Runtime;
+using System.Configuration;
 
 namespace emailchecker
 {
@@ -293,19 +294,22 @@ namespace emailchecker
 
 
 
-                foreach (ListViewItem listViewItem in this.listView1.Items)
-                {
+                
+                
                     int count = 1;
                     do
                     {
-                        if (excel.ReadCell(count, 1).ToString().Contains(listViewItem.Text) == true)
+                        foreach (ListViewItem listViewItem in this.listView1.Items)
                         {
-                            excel.WriteCell(excel.ReadCell(count, 1), count, 1); //WriteCell(value,line,column)
-                                                                                 //were 1 = 2
+                            if (excel.ReadCell(count, 1).ToString().Contains(listViewItem.Text) == true)
+                            {
+                                excel.WriteCell(excel.ReadCell(count, 1), count, 1); //WriteCell(value,line,column)
+                                                    //were 1 = 2
+                            }
                         }
-                        count++;
+                         count++;   
                     } while (count <= excel.LastRow());
-                }
+                
 
 
 
@@ -372,9 +376,13 @@ namespace emailchecker
 
         }
 
-        public void SaveFile()
+         void SaveFile()
         {
-            wb.SaveAs(@"C:\users\andre\desktop\testando2.xlsx"); //output file name
+            Configuration configuration =
+            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            MessageBox.Show(configuration.AppSettings.Settings["outputPath"].Value.ToString());
+            wb.SaveAs(configuration.AppSettings.Settings["outputPath"].Value.ToString()); //output file name
+            wb.Close();
         }
 
         public int LastRow()
@@ -395,6 +403,14 @@ namespace emailchecker
             int lastUsedcolumn = last.Column;
 
             return lastUsedcolumn;
+        }
+        private static void SetSetting(string key, string value)
+        {
+            Configuration configuration =
+            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configuration.AppSettings.Settings[key].Value = value;
+            configuration.Save(ConfigurationSaveMode.Full, true);
+            ConfigurationManager.RefreshSection("appSettings");
         }
 
         #endregion
