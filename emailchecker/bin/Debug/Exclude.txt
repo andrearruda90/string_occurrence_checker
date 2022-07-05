@@ -1,2 +1,8 @@
-@yahoo
-@outlook
+yahoo
+@hotmail
+73
+smith
+58
+roob
+good
+35
