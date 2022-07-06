@@ -73,7 +73,9 @@ namespace emailchecker
             SetSetting("outputFilename", $@"\{fileNameWExt} - Analisado{fileName.Replace(fileName, "")}");
             
             SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
-            //MessageBox.Show(fileName);
+            
+            
+            MessageBox.Show($@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
             // insert input path 
         }
 

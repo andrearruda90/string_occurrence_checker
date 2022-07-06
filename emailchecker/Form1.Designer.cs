@@ -276,23 +276,21 @@ namespace emailchecker
 
         public void HelloWorld()
         {
-            var excelProcessID = new List<int>();
 
-
-            foreach (Process p in Process.GetProcessesByName("EXCEL"))
-            {
-                excelProcessID.Add(p.Id);
-            }
 
             OpenFile();
-            KillProcess();
 
 
             void OpenFile()
             {
+                
                 Form1 excel = new Form1(textBox1.Text, 1); // input file name
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                
 
-
+              //  excel.LastRow();
+                
+               
 
                 //passing every listview1.Item to a new string list
 
@@ -300,20 +298,23 @@ namespace emailchecker
 
                 foreach(ListViewItem lisViewItem in this.listView1.Items)
                 {
-                    listItem.Add(lisViewItem.Text);
+                    listItem.Add(lisViewItem.Text.ToLower());
                 }
+               
 
                 // reading cells to checkup if they match with listitems
                 int count = 1;
                 do
                 {
-                    if (listItem.Any(s=>excel.ReadCell(count, 1).ToString().Contains(s)) == true)
+                    if (listItem.Any(s=>excel.ReadCell(count, 1).ToString().Contains(s)) == true || 
+                        excel.ReadCell(count, 1).Contains("@") == false || excel.ReadCell(count, 1).ToString() == ""
+                       )
                     {
                         excel.WriteCell(excel.ReadCell(count, 1), count, 1); //WriteCell(value,line,column)
                                                                              //                                                             //were 1 = 2
                     }
                     count++;
-                } while (count <= 5000); //excel.LastRow()
+                } while (count <= 5320); //I need to find the real last_row to use here as a variable.
 
 
 
@@ -322,27 +323,6 @@ namespace emailchecker
                 excel.SaveFile();
             }
 
-            void KillProcess()
-            {
-
-                int count = 0;
-                foreach (Process xlProcess in Process.GetProcessesByName("EXCEL"))
-                {
-                    foreach (int xlid in excelProcessID)
-                    {
-                        if (xlProcess.Id == xlid)
-                        {
-                            count++;
-                        }
-                    }
-
-                    if (count == 0)
-                    {
-                        xlProcess.Kill();
-                    }
-                    count = 0;
-                }
-            }
         }
         public Form1(string path, int Sheet)
         {
@@ -393,17 +373,17 @@ namespace emailchecker
         public int LastRow()
         {
             _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("A1", last);
+            _Excel.Range range = ws.get_Range("B1", last);
 
             int lastUsedRow = last.Row;
-
+            SetSetting("lastrw", lastUsedRow.ToString());
             return lastUsedRow;
         }
 
         public int LastColumn()
         {
             _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("A1", last);
+            _Excel.Range range = ws.get_Range("B1", last);
 
             int lastUsedcolumn = last.Column;
 
