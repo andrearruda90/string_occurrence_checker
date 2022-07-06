@@ -75,7 +75,7 @@ namespace emailchecker
             SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
             
             
-            MessageBox.Show($@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
+            //MessageBox.Show($@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
             // insert input path 
         }
 
@@ -159,6 +159,11 @@ namespace emailchecker
             {
                 listView1.Items.Add(strAllLines[i]);
             }
+        }
+
+        private void progressBar1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
