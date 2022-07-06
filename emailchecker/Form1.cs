@@ -35,6 +35,7 @@ namespace emailchecker
             tabPage3.Text = "Sobre";
             button1.Text = "Buscar";
             label1.Text = "Arquivo Origem";
+            label3.Text = "Aguardando";
             button2.Text = "Buscar";
             label2.Text = "Destino";
             button3.Text = "Analisar";
@@ -89,6 +90,7 @@ namespace emailchecker
         private void button3_Click(object sender, EventArgs e)
         {
             HelloWorld();
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
