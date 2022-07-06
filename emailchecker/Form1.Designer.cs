@@ -59,9 +59,11 @@ namespace emailchecker
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.button3 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -70,15 +72,13 @@ namespace emailchecker
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabPage2
@@ -163,6 +163,17 @@ namespace emailchecker
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.progressBar1);
+            this.groupBox4.Controls.Add(this.button3);
+            this.groupBox4.Location = new System.Drawing.Point(12, 121);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(375, 79);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -190,6 +201,20 @@ namespace emailchecker
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Location = new System.Drawing.Point(12, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(376, 109);
+            this.groupBox3.TabIndex = 8;
+            this.groupBox3.TabStop = false;
             // 
             // button2
             // 
@@ -259,35 +284,10 @@ namespace emailchecker
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(403, 161);
+            this.tabPage3.Size = new System.Drawing.Size(403, 207);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.textBox1);
-            this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Location = new System.Drawing.Point(12, 12);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(376, 109);
-            this.groupBox3.TabIndex = 8;
-            this.groupBox3.TabStop = false;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.progressBar1);
-            this.groupBox4.Controls.Add(this.button3);
-            this.groupBox4.Location = new System.Drawing.Point(12, 121);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(375, 79);
-            this.groupBox4.TabIndex = 9;
-            this.groupBox4.TabStop = false;
             // 
             // Form1
             // 
@@ -303,11 +303,11 @@ namespace emailchecker
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -315,7 +315,7 @@ namespace emailchecker
         public void HelloWorld()
         {
 
-            label3.Text = "Analisando...";
+            label3.Text = "Status: Analisando...";
             OpenFile();
 
 
@@ -361,7 +361,7 @@ namespace emailchecker
                 exit:
 
 
-                label3.Text = "Pronto!";
+                label3.Text = "Status: Pronto!";
                 excel.SaveFile();
             }
 

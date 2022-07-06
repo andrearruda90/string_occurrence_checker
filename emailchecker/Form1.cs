@@ -35,7 +35,7 @@ namespace emailchecker
             tabPage3.Text = "Sobre";
             button1.Text = "Buscar";
             label1.Text = "Arquivo Origem";
-            label3.Text = "Aguardando";
+            label3.Text = "Status: Aguardando usuário";
             button2.Text = "Buscar";
             label2.Text = "Destino";
             button3.Text = "Analisar";
@@ -62,7 +62,8 @@ namespace emailchecker
             Configuration configuration =
             ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            ofd.Filter = "xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)|*.xls|All files (*.*)|*.*";
+            ofd.Filter = "xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)" +
+                    "|*.xls|csv files (*.csv)|*.csv|All files (*.*)|*.*";
             ofd.ShowDialog();
             textBox1.Text = ofd.FileName;
 
@@ -72,19 +73,27 @@ namespace emailchecker
             textBox2.Text = textBox1.Text.Replace($@"\{fileName}", "");
 
             SetSetting("outputFilename", $@"\{fileNameWExt} - Analisado{fileName.Replace(fileName, "")}");
-            
-            SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
-            
-            
-            //MessageBox.Show($@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
-            // insert input path 
+            SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings
+                                        ["outputFilename"].Value.ToString()}".ToString());
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Configuration configuration =
+            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             fbd.ShowDialog();
-            textBox2.Text = fbd.SelectedPath;
+            
             outputpath = textBox2.Text;
+
+            string userpath = fbd.SelectedPath.ToString();
+            string fileName = Path.GetFileName(textBox1.Text);
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(textBox1.Text);
+
+            textBox2.Text = userpath;
+
+            SetSetting("outputPath", $@"{userpath}\{fileNameWithoutExtension} - 
+                                     Analisado{fileName.Replace(fileNameWithoutExtension, "")}");
         }
 
         private void button3_Click(object sender, EventArgs e)
