@@ -36,6 +36,7 @@ namespace emailchecker
             button1.Text = "Buscar";
             label1.Text = "Arquivo Origem";
             label3.Text = "Status: Aguardando usuário";
+            label4.Text = "";
             button2.Text = "Buscar";
             label2.Text = "Destino";
             button3.Text = "Analisar";
