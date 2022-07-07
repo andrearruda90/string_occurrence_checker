@@ -1,16 +1,10 @@
 ﻿checklist:
 
-0- Set checked column automatically by looking for the term "email" horizontally in "row 1"
-1- Insert validation on button 3 so the program doesn't run until both textbox1 and textbox2 are filled
-2- reset checklist items after press button4. The same action is inside Form1_Load event
-3- Check if deleting listview1 Items is really working after press button 5
+0- Set checked column automatically by looking for the term "email" horizontally in "row 1" (generate .csv file on Protheus)
 4- Create "About" tab.
-5- setup an icon for the program
-6- Disable multiselect option on Listview1
-7- Insert Shortcuts in tabs (if possible)
-8- Return Processes checkup lines - ok
-9- Publish
-10- Test inside Sandbox
+9- Treat errors
+10- Publish
+11- Test inside Sandbox
 
 
 

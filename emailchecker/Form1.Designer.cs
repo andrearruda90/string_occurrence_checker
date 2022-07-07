@@ -370,18 +370,25 @@ namespace emailchecker
                 {
                     progressBar1.Value = count;
                     if (listItem.Any(s=>excel.ReadCell(count, 1).ToString().Contains(s)) == true || 
-                        excel.ReadCell(count, 1).Contains("@") == false || excel.ReadCell(count, 1).ToString() == ""
-                       )
+                        excel.ReadCell(count, 1).Contains("@") == false || excel.ReadCell(count, 1).ToString() == "")
                     {
                         excel.WriteCell(excel.ReadCell(count, 1), count, 1); //WriteCell(value,line,column)
                                                                              //                                                             //were 1 = 2
                     } 
                     count++;
+                    
 
-                    if (count == excel.LastRow()) // why for looping is not working????? I had to put this to run normally
+                    if (count == excel.LastRow()) // why foreach doesn't work here????? I had to put this to run normally
                     {
-                        MessageBox.Show("Processo Finalilzado!","Finalizado",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
                         progressBar1.Value++;
+                        MessageBox.Show("Processo Finalilzado!", "Finalizado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        button1.Enabled = true;
+                        button2.Enabled = true;
+                        button3.Enabled = true;
+                        textBox1.Enabled = true;
+                        textBox2.Enabled = true;
+                        progressBar1.Enabled = false;
+                        label3.Enabled = false;
                         goto exit;
                     }
                 } 

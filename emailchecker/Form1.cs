@@ -40,7 +40,8 @@ namespace emailchecker
             tabPage3.Text = "Sobre";
             button1.Text = "Buscar";
             label1.Text = "Arquivo Origem";
-            label3.Text = "Status: Aguardando usuário";
+            label3.Text = "Status: Aguardando";
+            label3.Enabled = false; 
             label4.Text = "";
             button2.Text = "Buscar";
             label2.Text = "Destino";
@@ -49,6 +50,9 @@ namespace emailchecker
             button5.Text = "Remover";
             groupBox1.Text = "Considerar os itens abaixo:";
             groupBox2.Text = "Adicionar/Remover";
+
+            progressBar1.Enabled = false;
+
 
             //setting up listView2 items
             OpenLstvwItems();
@@ -61,6 +65,7 @@ namespace emailchecker
             listView1.Columns.Add("Lista", 268, HorizontalAlignment.Left);
             //Removing Header
             listView1.HeaderStyle = ColumnHeaderStyle.None;
+            listView1.MultiSelect = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -103,8 +108,22 @@ namespace emailchecker
 
         private void button3_Click(object sender, EventArgs e)
         {
-            HelloWorld();
-            
+            //checking if both textboxs have valid path
+            if (File.Exists(textBox1.Text) == false || Directory.Exists(textBox2.Text) == false)
+            {
+                MessageBox.Show("Insira Arquivo e Diretório Válido nos campos acima!","Campo vazio",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            else
+            {
+                button1.Enabled = false;
+                button2.Enabled = false;
+                button3.Enabled = false;
+                textBox1.Enabled = false;
+                textBox2.Enabled = false;
+                progressBar1.Enabled = true;
+                label3.Enabled = true;
+                HelloWorld();
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -114,6 +133,7 @@ namespace emailchecker
                 listView1.Items.Add(textBox3.Text);
                 SaveLstvwItems();
                 textBox3.Text = "";
+                
             }
             else
                 MessageBox.Show("Digite a palavra-chave primeiro.", "Campo Vazio", MessageBoxButtons.OK,
@@ -122,8 +142,9 @@ namespace emailchecker
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count > 0)
-            {
+            
+            if (listView1.SelectedItems.Count != 0)
+            {       
                 DialogResult question = MessageBox.Show($"Remover \"{listView1.SelectedItems[0].Text}\" da lista?", "Confirmação", MessageBoxButtons.YesNo,
                                                                                                          MessageBoxIcon.Question);
                 if (question == DialogResult.Yes)
@@ -132,7 +153,7 @@ namespace emailchecker
                     {
                         ListViewItem li = listView1.SelectedItems[i];
                         listView1.Items.Remove(li);
-
+                        RemoveLstvwItems();
                     }
                 }
                 else if (question == DialogResult.No)
@@ -140,11 +161,15 @@ namespace emailchecker
                     //do something else
                 }
 
-                RemoveLstvwItems();
+                
             }
-            else if (listView1.SelectedItems.Count == 0)
+            else
+            {
                 MessageBox.Show("Selecione um item primeiro!", "Sem seleção", MessageBoxButtons.OK,
                                                                               MessageBoxIcon.Exclamation);
+            }
+            
+            
         }
         private void SaveLstvwItems()
         {
