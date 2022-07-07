@@ -33,7 +33,12 @@ namespace emailchecker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-  
+            this.Text = "Verificador de E-mails";
+
+            //disable resize window
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            this.MaximizeBox = false;
 
             tabPage1.Text = "Analisar";
             tabPage2.Text = "Opções";
@@ -74,7 +79,7 @@ namespace emailchecker
             ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             ofd.Filter = "xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)" +
-                    "|*.xls|csv files (*.csv)|*.csv|All files (*.*)|*.*";
+                    "|*.xls|csv files (*.csv)|*.csv";//|All files (*.*)|*.*";
             ofd.ShowDialog();
             textBox1.Text = ofd.FileName;
 
@@ -86,6 +91,7 @@ namespace emailchecker
             SetSetting("outputFilename", $@"\{fileNameWExt} - Analisado{fileName.Replace(fileName, "")}");
             SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings
                                         ["outputFilename"].Value.ToString()}".ToString());
+            SetSetting("inputName", textBox1.Text.ToString());
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -104,6 +110,7 @@ namespace emailchecker
             textBox2.Text = userpath;
 
             SetSetting("outputPath", $@"{userpath}\{fileNameWithoutExtension} - Analisado{fileName.Replace(fileNameWithoutExtension, "")}");
+            SetSetting("inputName", textBox1.Text.ToString());
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -205,6 +212,17 @@ namespace emailchecker
         private void progressBar1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+ 
+            
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }

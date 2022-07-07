@@ -24,3 +24,9 @@ C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchec
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.CoreCompileInputs.cache
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.exe
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.pdb
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\pt-BR\emailchecker.resources.dll
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.Form1.pt-BR.resources
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\pt-BR\emailchecker.resources.dll
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\Aspose.Cells.dll
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\Aspose.Cells.xml
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.CopyComplete
