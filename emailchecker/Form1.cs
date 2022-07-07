@@ -25,16 +25,29 @@ namespace emailchecker
         private FolderBrowserDialog fbd = new FolderBrowserDialog();
         public Form1()
         {
+
+
+            //#S
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = "Verificador de E-mails";
+
+            //disable resize window
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            this.MaximizeBox = false;
+
             tabPage1.Text = "Analisar";
             tabPage2.Text = "Opções";
             tabPage3.Text = "Sobre";
             button1.Text = "Buscar";
             label1.Text = "Arquivo Origem";
+            label3.Text = "Status: Aguardando";
+            label3.Enabled = false; 
+            label4.Text = "";
             button2.Text = "Buscar";
             label2.Text = "Destino";
             button3.Text = "Analisar";
@@ -42,6 +55,9 @@ namespace emailchecker
             button5.Text = "Remover";
             groupBox1.Text = "Considerar os itens abaixo:";
             groupBox2.Text = "Adicionar/Remover";
+
+            progressBar1.Enabled = false;
+
 
             //setting up listView2 items
             OpenLstvwItems();
@@ -54,6 +70,7 @@ namespace emailchecker
             listView1.Columns.Add("Lista", 268, HorizontalAlignment.Left);
             //Removing Header
             listView1.HeaderStyle = ColumnHeaderStyle.None;
+            listView1.MultiSelect = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -61,7 +78,8 @@ namespace emailchecker
             Configuration configuration =
             ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            ofd.Filter = "xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)|*.xls|All files (*.*)|*.*";
+            ofd.Filter = "xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)" +
+                    "|*.xls|csv files (*.csv)|*.csv";//|All files (*.*)|*.*";
             ofd.ShowDialog();
             textBox1.Text = ofd.FileName;
 <<<<<<< HEAD
@@ -74,23 +92,56 @@ namespace emailchecker
             textBox2.Text = textBox1.Text.Replace($@"\{fileName}", "");
 
             SetSetting("outputFilename", $@"\{fileNameWExt} - Analisado{fileName.Replace(fileName, "")}");
+<<<<<<< HEAD
             
             SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings["outputFilename"].Value.ToString()}".ToString());
             //MessageBox.Show(fileName);
             // insert input path 
 >>>>>>> master
+=======
+            SetSetting("outputPath", $@"{textBox2.Text}{configuration.AppSettings.Settings
+                                        ["outputFilename"].Value.ToString()}".ToString());
+            SetSetting("inputName", textBox1.Text.ToString());
+>>>>>>> master
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Configuration configuration =
+            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             fbd.ShowDialog();
-            textBox2.Text = fbd.SelectedPath;
+            
             outputpath = textBox2.Text;
+
+            string userpath = fbd.SelectedPath.ToString();
+            string fileName = Path.GetFileName(textBox1.Text);
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(textBox1.Text);
+
+            textBox2.Text = userpath;
+
+            SetSetting("outputPath", $@"{userpath}\{fileNameWithoutExtension} - Analisado{fileName.Replace(fileNameWithoutExtension, "")}");
+            SetSetting("inputName", textBox1.Text.ToString());
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            HelloWorld();
+            //checking if both textboxs have valid path
+            if (File.Exists(textBox1.Text) == false || Directory.Exists(textBox2.Text) == false)
+            {
+                MessageBox.Show("Insira Arquivo e Diretório Válido nos campos acima!","Campo vazio",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            else
+            {
+                button1.Enabled = false;
+                button2.Enabled = false;
+                button3.Enabled = false;
+                textBox1.Enabled = false;
+                textBox2.Enabled = false;
+                progressBar1.Enabled = true;
+                label3.Enabled = true;
+                HelloWorld();
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -100,6 +151,7 @@ namespace emailchecker
                 listView1.Items.Add(textBox3.Text);
                 SaveLstvwItems();
                 textBox3.Text = "";
+                
             }
             else
                 MessageBox.Show("Digite a palavra-chave primeiro.", "Campo Vazio", MessageBoxButtons.OK,
@@ -108,8 +160,9 @@ namespace emailchecker
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count > 0)
-            {
+            
+            if (listView1.SelectedItems.Count != 0)
+            {       
                 DialogResult question = MessageBox.Show($"Remover \"{listView1.SelectedItems[0].Text}\" da lista?", "Confirmação", MessageBoxButtons.YesNo,
                                                                                                          MessageBoxIcon.Question);
                 if (question == DialogResult.Yes)
@@ -118,7 +171,7 @@ namespace emailchecker
                     {
                         ListViewItem li = listView1.SelectedItems[i];
                         listView1.Items.Remove(li);
-
+                        RemoveLstvwItems();
                     }
                 }
                 else if (question == DialogResult.No)
@@ -126,11 +179,15 @@ namespace emailchecker
                     //do something else
                 }
 
-                RemoveLstvwItems();
+                
             }
-            else if (listView1.SelectedItems.Count == 0)
+            else
+            {
                 MessageBox.Show("Selecione um item primeiro!", "Sem seleção", MessageBoxButtons.OK,
                                                                               MessageBoxIcon.Exclamation);
+            }
+            
+            
         }
         private void SaveLstvwItems()
         {
@@ -161,6 +218,22 @@ namespace emailchecker
             {
                 listView1.Items.Add(strAllLines[i]);
             }
+        }
+
+        private void progressBar1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+ 
+            
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }

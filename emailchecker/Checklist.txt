@@ -1,0 +1,16 @@
+﻿checklist:
+
+0- Set checked column automatically by looking for the term "email" horizontally in "row 1" (generate .csv file on Protheus)
+4- Create "About" tab.
+9- Treat errors
+10- Publish
+11- Test inside Sandbox
+https://docs.microsoft.com/pt-br/azure/postgresql/flexible-server/how-to-deploy-on-azure-free-account
+how to create a database on Azure (link above)
+
+
+Extra ideas:
+
+Insert Phone check option
+Insert Birthday check option
+Insert email 2 check option

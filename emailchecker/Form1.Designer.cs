@@ -21,9 +21,8 @@ namespace emailchecker
 
     partial class Form1
     {
-        _Application excel = new _Excel.Application();
-        Workbook wb;
-        Worksheet ws;
+        
+
         string outputpath = "";
         /// <summary>
         /// Required designer variable.
@@ -51,248 +50,252 @@ namespace emailchecker
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.button3 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(15, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(411, 187);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Controls.Add(this.button2);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.textBox2);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.textBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(403, 161);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(403, 161);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(403, 161);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(29, 28);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(274, 20);
-            this.textBox1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(309, 28);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 19);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(309, 78);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(64, 19);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "label2";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(29, 78);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(274, 20);
-            this.textBox2.TabIndex = 3;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(143, 121);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(64, 19);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.listView1);
-            this.groupBox1.Location = new System.Drawing.Point(9, 9);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(203, 151);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
-            // listView1
-            // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(10, 17);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(180, 122);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Location = new System.Drawing.Point(227, 9);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(161, 152);
-            this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(34, 19);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(122, 20);
-            this.textBox3.TabIndex = 2;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(72, 45);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(83, 21);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(140, 120);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(83, 21);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(73, 119);
+            resources.ApplyResources(this.button5, "button5");
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(83, 21);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "button5";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // button4
+            // 
+            resources.ApplyResources(this.button4, "button4");
+            this.button4.Name = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // textBox3
+            // 
+            resources.ApplyResources(this.textBox3, "textBox3");
+            this.textBox3.Name = "textBox3";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.listView1);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
+            // 
+            // listView1
+            // 
+            this.listView1.HideSelection = false;
+            resources.ApplyResources(this.listView1, "listView1");
+            this.listView1.Name = "listView1";
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox4);
+            this.tabPage1.Controls.Add(this.groupBox3);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.progressBar1);
+            this.groupBox4.Controls.Add(this.button3);
+            resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.TabStop = false;
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // progressBar1
+            // 
+            resources.ApplyResources(this.progressBar1, "progressBar1");
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
+            // 
+            // button3
+            // 
+            resources.ApplyResources(this.button3, "button3");
+            this.button3.Name = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.label1);
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            // 
+            // button2
+            // 
+            resources.ApplyResources(this.button2, "button2");
+            this.button2.Name = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // textBox2
+            // 
+            resources.ApplyResources(this.textBox2, "textBox2");
+            this.textBox2.Name = "textBox2";
+            // 
+            // textBox1
+            // 
+            resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.Name = "textBox1";
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            // 
+            // tabPage3
+            // 
+            resources.ApplyResources(this.tabPage3, "tabPage3");
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(438, 211);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
-            this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
+
+
+        _Application excel = new _Excel.Application();
+        Workbook wb;
+        Worksheet ws;
+
         public void HelloWorld()
         {
-            var excelProcessID = new List<int>();
 
-
-            foreach (Process p in Process.GetProcessesByName("EXCEL"))
-            {
-                excelProcessID.Add(p.Id);
-            }
-
+            label3.Text = "Status: Analisando...";
             OpenFile();
-            KillProcess();
 
 
             void OpenFile()
             {
+
+                //#A Creating a safeProcess List 
+                List<int> safePId = new List<int>();
+
+                Process[] safeProcess = Process.GetProcessesByName("EXCEL");
+                foreach (Process p in safeProcess)
+                {
+                    safePId.Add(p.Id);
+                }
+
                 Form1 excel = new Form1(textBox1.Text, 1); // input file name
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
 
+                //finding the right column
+
+                int targetColumn = 0;
+                for (int i = 0; i <= excel.LastColumn(); i++)
+                {
+                    if (excel.ReadCell(2, i).Contains("mail") == true) //where 2 equals row 3
+                    {
+                        targetColumn = i;
+                        goto escape;
+                    }
+                }
+                escape:
 
                 //passing every listview1.Item to a new string list
 
@@ -300,49 +303,66 @@ namespace emailchecker
 
                 foreach(ListViewItem lisViewItem in this.listView1.Items)
                 {
-                    listItem.Add(lisViewItem.Text);
+                    listItem.Add(lisViewItem.Text.ToLower());
                 }
 
                 // reading cells to checkup if they match with listitems
                 int count = 1;
-                do
+                progressBar1.Maximum = excel.LastRow();
+                
+                for (int i = 1; i <= excel.LastRow(); i++)
                 {
-                    if (listItem.Any(s=>excel.ReadCell(count, 1).ToString().Contains(s)) == true)
+                    progressBar1.Value = count;
+                    if (listItem.Any(s=>excel.ReadCell(count, targetColumn).ToString().Contains(s)) == true || 
+                        excel.ReadCell(count, targetColumn).Contains("@") == false || excel.ReadCell(count, targetColumn).ToString() == "")
                     {
-                        excel.WriteCell(excel.ReadCell(count, 1), count, 1); //WriteCell(value,line,column)
+                        excel.WriteCell(excel.ReadCell(count, targetColumn), count, targetColumn); //WriteCell(value,line,column)
                                                                              //                                                             //were 1 = 2
-                    }
+                    } 
                     count++;
-                } while (count <= 5000); //excel.LastRow()
+                    
 
-
-
-
-
-                excel.SaveFile();
-            }
-
-            void KillProcess()
-            {
-
-                int count = 0;
-                foreach (Process xlProcess in Process.GetProcessesByName("EXCEL"))
-                {
-                    foreach (int xlid in excelProcessID)
+                    if (count == excel.LastRow()) // why foreach doesn't work here????? I had to put this to run normally
                     {
-                        if (xlProcess.Id == xlid)
+                        progressBar1.Value++;
+                        MessageBox.Show("Processo Finalilzado!", "Finalizado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        button1.Enabled = true;
+                        button2.Enabled = true;
+                        button3.Enabled = true;
+                        textBox1.Enabled = true;
+                        textBox2.Enabled = true;
+                        progressBar1.Enabled = false;
+                        label3.Enabled = false;
+                        goto exit;
+                    }
+                } 
+
+                exit:
+
+
+                label3.Text = "Status: Pronto!";
+                excel.SaveFile();
+
+                //#A - Killing bad EXCEl processes
+                Process[] killProcess = Process.GetProcessesByName("EXCEL");
+                foreach (Process p2 in killProcess)
+                {
+                    int countp = 0;
+                    foreach (var i in safePId)
+                    {
+                        if (p2.Id == i)
                         {
-                            count++;
+                            countp++;
                         }
                     }
 
-                    if (count == 0)
+                    if (countp == 0)
                     {
-                        xlProcess.Kill();
+                        p2.Kill();
                     }
-                    count = 0;
                 }
             }
+
         }
         public Form1(string path, int Sheet)
         {
@@ -385,10 +405,31 @@ namespace emailchecker
         {
             Configuration configuration =
             ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            MessageBox.Show(configuration.AppSettings.Settings["outputPath"].Value.ToString());
+           
             wb.SaveAs(configuration.AppSettings.Settings["outputPath"].Value.ToString()); //output file name
             wb.Close();
         }
+
+         void Convertion()
+        {
+            string csv = @"C:\users\andre.arruda\desktop\scdkst00.csv";
+            string xls = @"C:\users\andre.arruda\desktop\scdkst00";
+            _Excel.Application xl = new _Excel.Application();
+            //Open Excel Workbook for conversion.
+            _Excel.Workbook wb = xl.Workbooks.Open(csv);
+            _Excel.Worksheet ws = (_Excel.Worksheet)wb.Worksheets.get_Item(1);
+            //Select The UsedRange
+            _Excel.Range used = ws.UsedRange;
+            //Autofit The Columns
+            used.EntireColumn.AutoFit();
+            //Save file as csv file
+            wb.SaveAs(xls, -4143);
+            //Close the Workbook.
+            wb.Close();
+            //Quit Excel Application.
+            xl.Quit();
+        }
+
 
         public int LastRow()
         {
@@ -396,14 +437,13 @@ namespace emailchecker
             _Excel.Range range = ws.get_Range("A1", last);
 
             int lastUsedRow = last.Row;
-
             return lastUsedRow;
         }
 
         public int LastColumn()
         {
             _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("A1", last);
+            _Excel.Range range = ws.get_Range("B1", last);
 
             int lastUsedcolumn = last.Column;
 
@@ -420,23 +460,28 @@ namespace emailchecker
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
+        private TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView listView1;
+        private ListView listView1;
+        private TabPage tabPage1;
+        private ProgressBar progressBar1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private TabControl tabControl1;
+        private TabPage tabPage3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label4;
     }
 
 }
