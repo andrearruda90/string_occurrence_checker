@@ -21,9 +21,8 @@ namespace emailchecker
 
     partial class Form1
     {
-        _Application excel = new _Excel.Application();
-        Workbook wb;
-        Worksheet ws;
+        
+
         string outputpath = "";
         /// <summary>
         /// Required designer variable.
@@ -51,6 +50,7 @@ namespace emailchecker
         /// </summary>
         private void InitializeComponent()
         {
+
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
@@ -323,6 +323,12 @@ namespace emailchecker
 
         }
 
+
+
+        _Application excel = new _Excel.Application();
+        Workbook wb;
+        Worksheet ws;
+
         public void HelloWorld()
         {
 
@@ -332,9 +338,19 @@ namespace emailchecker
 
             void OpenFile()
             {
-                
+
+                //#A Creating a safeProcess List 
+                List<int> safePId = new List<int>();
+
+                Process[] safeProcess = Process.GetProcessesByName("EXCEL");
+                foreach (Process p in safeProcess)
+                {
+                    safePId.Add(p.Id);
+                }
+
                 Form1 excel = new Form1(textBox1.Text, 1); // input file name
                 Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
 
 
                 //passing every listview1.Item to a new string list
@@ -365,6 +381,7 @@ namespace emailchecker
                     if (count == excel.LastRow()) // why for looping is not working????? I had to put this to run normally
                     {
                         MessageBox.Show("Processo Finalilzado!","Finalizado",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                        progressBar1.Value++;
                         goto exit;
                     }
                 } 
@@ -374,6 +391,25 @@ namespace emailchecker
 
                 label3.Text = "Status: Pronto!";
                 excel.SaveFile();
+
+                //#A - Killing bad EXCEl processes
+                Process[] killProcess = Process.GetProcessesByName("EXCEL");
+                foreach (Process p2 in killProcess)
+                {
+                    int countp = 0;
+                    foreach (var i in safePId)
+                    {
+                        if (p2.Id == i)
+                        {
+                            countp++;
+                        }
+                    }
+
+                    if (countp == 0)
+                    {
+                        p2.Kill();
+                    }
+                }
             }
 
         }

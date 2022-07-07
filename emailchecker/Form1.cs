@@ -25,11 +25,16 @@ namespace emailchecker
         private FolderBrowserDialog fbd = new FolderBrowserDialog();
         public Form1()
         {
+
+
+            //#S
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+  
+
             tabPage1.Text = "Analisar";
             tabPage2.Text = "Opções";
             tabPage3.Text = "Sobre";
@@ -93,8 +98,7 @@ namespace emailchecker
 
             textBox2.Text = userpath;
 
-            SetSetting("outputPath", $@"{userpath}\{fileNameWithoutExtension} - 
-                                     Analisado{fileName.Replace(fileNameWithoutExtension, "")}");
+            SetSetting("outputPath", $@"{userpath}\{fileNameWithoutExtension} - Analisado{fileName.Replace(fileNameWithoutExtension, "")}");
         }
 
         private void button3_Click(object sender, EventArgs e)
