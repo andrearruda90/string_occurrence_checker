@@ -8,7 +8,7 @@
 5- setup an icon for the program
 6- Disable multiselect option on Listview1
 7- Insert Shortcuts in tabs (if possible)
-8- Return Processes checkup lines
+8- Return Processes checkup lines - ok
 9- Publish
 10- Test inside Sandbox
 
