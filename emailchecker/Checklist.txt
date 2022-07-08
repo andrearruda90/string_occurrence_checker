@@ -14,3 +14,30 @@ Extra ideas:
 Insert Phone check option
 Insert Birthday check option
 Insert email 2 check option
+
+método 1
+
+c# vai na pasta temp e verifica se existe algum arquivo .csv por lá. se houver ele vai deletar todos.
+c# vai copiar o arquivo .csv em questão pra dentro da pasta temp
+C# vai chamar o app.py
+C# vai aguardar alguns segundos
+Python vai verificar se há algum arquivo .csv dentro da pasta Temp, se achar ele vai usar esse arquivo pra converter em xlsx 
+Python vai jogar o arquivo convertido pra dentro da pasta temp
+Python vai deletar o arquivo .csv que está dentro da pasta temp
+C# vai ler o arquivo convertido dentro da pasta temp e vai usá-lo como base para realizar a análise
+C# vai ir com o resto do processo até o fim normalmente
+C# vai deletar o arquivo .xlsx de dentro da pasta Temp
+
+
+método 2
+
+C# vai salvar textbox1.path.toString e textbox2.path.toString em um arquivo txt na pasta temp (esse arquivo deve ter um nome especifico para as duas linguagens entende-lo)
+c# vai chamar convertcsv.py
+C# vai aguardar alguns segundos
+Python vai buscar a string textbox1 dentro do arquivo txt da pasta temp e usa-lo como arquivo origem
+Python vai buscar a string textbox2 dentro do arquivo txt da past temp e usa-lo como path saida e assim fazer a conversão
+C# vai buscar o arquivo convertido e usa-lo como path de entrada.
+C# vai rodar o resto do processo normalmente
+C# vai deletar o arquivo xlsx convertido
+
+

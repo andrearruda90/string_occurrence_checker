@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "emailchecker", "emailchecker\emailchecker.csproj", "{52809962-D5DE-4353-892D-4E5C4152B3FD}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "csvconversor", "csvconversor\csvconversor.pyproj", "{5DEDA907-4ED0-4025-9D05-16AD3BDEB0A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{52809962-D5DE-4353-892D-4E5C4152B3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52809962-D5DE-4353-892D-4E5C4152B3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52809962-D5DE-4353-892D-4E5C4152B3FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DEDA907-4ED0-4025-9D05-16AD3BDEB0A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DEDA907-4ED0-4025-9D05-16AD3BDEB0A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
