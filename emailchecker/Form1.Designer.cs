@@ -283,19 +283,29 @@ namespace emailchecker
                 Form1 excel = new Form1(textBox1.Text, 1); // input file name
                 Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-
+                //finding head row
+                int headRow = 0;
+                for (int x = 0; x<1000; x++)
+                {
+                    if (excel.ReadCell(x, 1).ToString() != "" && excel.ReadCell(x, 1).ToString() != "SA1") //where 2 equals row 3
+                    {
+                        headRow = x;
+                        goto escape1;
+                    }
+                }
+                escape1:
                 //finding the right column
 
                 int targetColumn = 0;
                 for (int i = 0; i <= excel.LastColumn(); i++)
                 {
-                    if (excel.ReadCell(2, i).Contains("mail") == true) //where 2 equals row 3
+                    if (excel.ReadCell(headRow, i).Contains("mail") == true) //where 2 equals row 3
                     {
                         targetColumn = i;
-                        goto escape;
+                        goto escape2;
                     }
                 }
-                escape:
+                escape2:
 
                 //passing every listview1.Item to a new string list
 
@@ -307,9 +317,18 @@ namespace emailchecker
                 }
 
                 // reading cells to checkup if they match with listitems
-                int count = 1;
+                int count = headRow +1;
                 progressBar1.Maximum = excel.LastRow();
-                
+
+                for (int y = 0; y < headRow; y++)
+                {
+                    progressBar1.Value = y;
+                    if (progressBar1.Value == headRow - 1)
+                    {
+                        goto escape3;
+                    }
+                }
+                escape3:
                 for (int i = 1; i <= excel.LastRow(); i++)
                 {
                     progressBar1.Value = count;
@@ -406,30 +425,9 @@ namespace emailchecker
             Configuration configuration =
             ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
            
-            wb.SaveAs(configuration.AppSettings.Settings["outputPath"].Value.ToString()); //output file name
+            wb.SaveAs(@"C:\users\andre\desktop\Resutado",51); //output file name
             wb.Close();
         }
-
-         void Convertion()
-        {
-            string csv = @"C:\users\andre.arruda\desktop\scdkst00.csv";
-            string xls = @"C:\users\andre.arruda\desktop\scdkst00";
-            _Excel.Application xl = new _Excel.Application();
-            //Open Excel Workbook for conversion.
-            _Excel.Workbook wb = xl.Workbooks.Open(csv);
-            _Excel.Worksheet ws = (_Excel.Worksheet)wb.Worksheets.get_Item(1);
-            //Select The UsedRange
-            _Excel.Range used = ws.UsedRange;
-            //Autofit The Columns
-            used.EntireColumn.AutoFit();
-            //Save file as csv file
-            wb.SaveAs(xls, -4143);
-            //Close the Workbook.
-            wb.Close();
-            //Quit Excel Application.
-            xl.Quit();
-        }
-
 
         public int LastRow()
         {
