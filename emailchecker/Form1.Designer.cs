@@ -14,6 +14,8 @@ using _Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 using System.Runtime;
 using System.Configuration;
+using emailchecker;
+
 
 
 namespace emailchecker
@@ -21,9 +23,9 @@ namespace emailchecker
 
     partial class Form1
     {
-        
 
-        string outputpath = "";
+        List<int> process = (new List<int>());
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -48,7 +50,7 @@ namespace emailchecker
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -164,7 +166,6 @@ namespace emailchecker
             // 
             resources.ApplyResources(this.progressBar1, "progressBar1");
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // button3
             // 
@@ -254,232 +255,30 @@ namespace emailchecker
             this.ResumeLayout(false);
 
         }
-
-
-
-        _Application excel = new _Excel.Application();
-        Workbook wb;
-        Worksheet ws;
-
-        public void HelloWorld()
-        {
-
-            label3.Text = "Status: Analisando...";
-            OpenFile();
-
-
-            void OpenFile()
-            {
-
-                //#A Creating a safeProcess List 
-                List<int> safePId = new List<int>();
-
-                Process[] safeProcess = Process.GetProcessesByName("EXCEL");
-                foreach (Process p in safeProcess)
-                {
-                    safePId.Add(p.Id);
-                }
-
-                Form1 excel = new Form1(textBox1.Text, 1); // input file name
-                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-                //finding head row
-                int headRow = 0;
-                for (int x = 0; x<1000; x++)
-                {
-                    if (excel.ReadCell(x, 1).ToString() != "" && excel.ReadCell(x, 1).ToString() != "SA1") //where 2 equals row 3
-                    {
-                        headRow = x;
-                        goto escape1;
-                    }
-                }
-                escape1:
-                //finding the right column
-
-                int targetColumn = 0;
-                for (int i = 0; i <= excel.LastColumn(); i++)
-                {
-                    if (excel.ReadCell(headRow, i).Contains("mail") == true) //where 2 equals row 3
-                    {
-                        targetColumn = i;
-                        goto escape2;
-                    }
-                }
-                escape2:
-
-                //passing every listview1.Item to a new string list
-
-                var listItem = new List<string>();
-
-                foreach(ListViewItem lisViewItem in this.listView1.Items)
-                {
-                    listItem.Add(lisViewItem.Text.ToLower());
-                }
-
-                // reading cells to checkup if they match with listitems
-                int count = headRow +1;
-                progressBar1.Maximum = excel.LastRow();
-
-                for (int y = 0; y < headRow; y++)
-                {
-                    progressBar1.Value = y;
-                    if (progressBar1.Value == headRow - 1)
-                    {
-                        goto escape3;
-                    }
-                }
-                escape3:
-                for (int i = 1; i <= excel.LastRow(); i++)
-                {
-                    progressBar1.Value = count;
-                    if (listItem.Any(s=>excel.ReadCell(count, targetColumn).ToString().Contains(s)) == true || 
-                        excel.ReadCell(count, targetColumn).Contains("@") == false || excel.ReadCell(count, targetColumn).ToString() == "")
-                    {
-                        excel.WriteCell(excel.ReadCell(count, targetColumn), count, targetColumn); //WriteCell(value,line,column)
-                                                                             //                                                             //were 1 = 2
-                    } 
-                    count++;
-                    
-
-                    if (count == excel.LastRow()) // why foreach doesn't work here????? I had to put this to run normally
-                    {
-                        progressBar1.Value++;
-                        MessageBox.Show("Processo Finalilzado!", "Finalizado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        button1.Enabled = true;
-                        button2.Enabled = true;
-                        button3.Enabled = true;
-                        textBox1.Enabled = true;
-                        textBox2.Enabled = true;
-                        progressBar1.Enabled = false;
-                        label3.Enabled = false;
-                        goto exit;
-                    }
-                } 
-
-                exit:
-
-
-                label3.Text = "Status: Pronto!";
-                excel.SaveFile();
-
-                //#A - Killing bad EXCEl processes
-                Process[] killProcess = Process.GetProcessesByName("EXCEL");
-                foreach (Process p2 in killProcess)
-                {
-                    int countp = 0;
-                    foreach (var i in safePId)
-                    {
-                        if (p2.Id == i)
-                        {
-                            countp++;
-                        }
-                    }
-
-                    if (countp == 0)
-                    {
-                        p2.Kill();
-                    }
-                }
-            }
-
-        }
-        public Form1(string path, int Sheet)
-        {
-
-
-            wb = excel.Workbooks.Open(path);
-            ws = wb.Worksheets[Sheet];
-
-        }
-
-        public string ReadCell(int i, int j)
-        {
-
-            i++;
-            j++;
-
-
-            if (ws.Cells[i, j].Value2 != null)
-                return ws.Cells[i, j].Value2.ToString();
-            else
-                return "";
-
-        }
-
-        public string WriteCell(string k, int i, int j)
-        {
-            i++;
-            j++;
-
-            ws.Cells[i, j].Value2 = k;
-            ws.Cells[i, j].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
-
-            return k;
-
-
-
-        }
-
-         void SaveFile()
-        {
-            Configuration configuration =
-            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-           
-            wb.SaveAs(@"C:\users\andre\desktop\Resutado",51); //output file name
-            wb.Close();
-        }
-
-        public int LastRow()
-        {
-            _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("A1", last);
-
-            int lastUsedRow = last.Row;
-            return lastUsedRow;
-        }
-
-        public int LastColumn()
-        {
-            _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("B1", last);
-
-            int lastUsedcolumn = last.Column;
-
-            return lastUsedcolumn;
-        }
-        private static void SetSetting(string key, string value)
-        {
-            Configuration configuration =
-            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings[key].Value = value;
-            configuration.Save(ConfigurationSaveMode.Full, true);
-            ConfigurationManager.RefreshSection("appSettings");
-        }
-
         #endregion
 
-        private TabPage tabPage2;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private ListView listView1;
-        private TabPage tabPage1;
-        private ProgressBar progressBar1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
-        private TabControl tabControl1;
-        private TabPage tabPage3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label4;
+        public TabPage tabPage2;
+        public System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.Button button5;
+        public System.Windows.Forms.Button button4;
+        public System.Windows.Forms.TextBox textBox3;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public ListView listView1;
+        public TabPage tabPage1;
+        public ProgressBar progressBar1;
+        public System.Windows.Forms.Button button3;
+        public System.Windows.Forms.Button button2;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.TextBox textBox2;
+        public System.Windows.Forms.TextBox textBox1;
+        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Label label1;
+        public TabControl tabControl1;
+        public TabPage tabPage3;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.GroupBox groupBox3;
+        public System.Windows.Forms.GroupBox groupBox4;
+        public System.Windows.Forms.Label label4;
     }
 
 }

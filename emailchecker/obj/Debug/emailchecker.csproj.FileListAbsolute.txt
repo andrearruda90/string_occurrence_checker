@@ -67,3 +67,4 @@ C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.For
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.Fody.CopyLocal.cache
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\pt-BR\emailchecker.resources.dll
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.CopyComplete
+C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.exe.config
