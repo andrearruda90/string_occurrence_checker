@@ -31,7 +31,7 @@ namespace emailchecker
     {
         public string fileName;
         public string directoryPath;
-        public int fileFormat;
+        public int fileFormat = 51;
     }
 
 }
