@@ -1,32 +1,24 @@
+from pickle import FALSE
 import numpy as np 
 from pandas import read_excel 
 import pandas as pd 
 import os
+import time
 
 
-directory = "csvconverter"
+directory = "converting/"
 parentDir = os.path.expandvars('%systemdrive%/')
 path = os.path.join(parentDir,directory)
-filesCounter = 0
-isPath = os.path.isdir(path)
+filename = "converting.csv"
+outputfilename = "converted.xlsx"
 
-#creating path if it doesn't exists
-if not isPath:
-    pass 
-    os.mkdir(path)
-    print("Directory '% s' created" % directory)
 
-#check if there's any file inside path
 
-for paths in os.listdir(path):
-    if os.path.isfile(os.path(path, paths)):
-        count +=1
+while(os.path.isfile(path + filename) == False):
+    time.sleep(1)
 
-print('File count: ', count)
+GFdf_new = pd.read_csv(path + filename, sep=None) 
+GFG = pd.ExcelWriter(path + outputfilename)
+GFdf_new.to_excel(GFG, index = False) 
 
-#df_new = pd.read_csv("C:/Users/andre/Desktop/scdkst00.csv", sep=None) 
-#GFG = pd.ExcelWriter("C:/Users/andre/Desktop/scdkst00.xlsx") 
-#df_new.to_excel(GFG, index = False) 
-  
-#GFG.save()
-
+GFG.save()
