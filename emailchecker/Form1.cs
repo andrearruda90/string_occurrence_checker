@@ -356,7 +356,7 @@ namespace emailchecker
             getexcelprocesses();
             
             // getting input file name
-            Form1 excel = new Form1(textBox1.Text, 1);
+            Form1 excel = new Form1(Path.GetPathRoot(Environment.SystemDirectory) + @"converting\converted.xlsx" , 1);
             
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
@@ -364,14 +364,12 @@ namespace emailchecker
             int headRow = 0;
             for (int x = 0; x < 1000; x++)
             {
-                if (excel.ReadCell(x, 1).ToString() != "" && excel.ReadCell(x, 1).ToString() != "SA1") //where 2 equals row 3
+                if (excel.ReadCell(x, 0).ToString() != "" && excel.ReadCell(x, 0).ToString() != "SA1") //where 2 equals row 3
                 {
                     headRow = x;
-                    goto escape1;
+                    break;
                 }
             }
-        escape1:
-
             //finding the e-mail column
             int targetColumn = 0;
             for (int i = 0; i <= excel.LastColumn(); i++)
@@ -379,10 +377,9 @@ namespace emailchecker
                 if (excel.ReadCell(headRow, i).Contains("mail") == true) //where 2 equals row 3
                 {
                     targetColumn = i;
-                    goto escape2;
+                    break;
                 }
             }
-        escape2:
 
             //passing every listview1.Item to a new string list
 

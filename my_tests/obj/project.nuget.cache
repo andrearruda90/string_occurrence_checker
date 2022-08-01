@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EFX+hAjVP4gXIrJbYVTrkXqShsbifljVlw8eBJVKvs+xDkA+uMh/tviJbF2aYyPKiqkT2vgzKN+1SwtlcX+8BQ==",
+  "dgSpecHash": "CmI55uCjTZ8+LQsKDdKRfbc3hgakaJ8XkAJ6w7EsNtqx1ioLgyxQmHAS+fMzRC0fv6TihwBfYN4gz/XG8Cp6ew==",
   "success": true,
-  "projectFilePath": "C:\\Users\\andre\\source\\repos\\emailchecker\\my_tests\\my_tests.csproj",
+  "projectFilePath": "C:\\Users\\andre.arruda\\Source\\Repos\\emailchecker\\my_tests\\my_tests.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
