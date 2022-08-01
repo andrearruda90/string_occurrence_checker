@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 using System.Configuration;
+using System.Threading;
+using System.Diagnostics;
 
 namespace emailchecker
 {
@@ -39,7 +35,7 @@ namespace emailchecker
 
             this.MaximizeBox = false;
 
-            tabPage1.Text = "Analisar"; tabPage2.Text = "Opções"; tabPage3.Text = "Sobre"; button1.Text = "Buscar";
+            tabPage1.Text = "Analisar"; tabPage2.Text = "Opções"; button1.Text = "Buscar";
             label1.Text = "Arquivo Origem"; label3.Text = "Status: Aguardando";label3.Enabled = false; label4.Text = "";
             button2.Text = "Buscar";label2.Text = "Destino"; button3.Text = "Analisar";button4.Text = "Adicionar";
             button5.Text = "Remover"; groupBox1.Text = "Considerar os itens abaixo:"; groupBox2.Text = "Adicionar/Remover";
@@ -76,6 +72,7 @@ namespace emailchecker
 
                 textBox1.Text = inputFile.fullPath;
                 textBox2.Text = outputFile.directoryPath;
+
 
 
             }
@@ -116,8 +113,11 @@ namespace emailchecker
             {
                 button1.Enabled = false; button2.Enabled = false; button3.Enabled = false; textBox1.Enabled = false;
                 textBox2.Enabled = false; progressBar1.Enabled = true; label3.Enabled = true;
-                Execution();
+                
             }
+
+            convertInputFile();
+            Execution();
         }
         private void button4_Click(object sender, EventArgs e)
         {
@@ -215,11 +215,9 @@ namespace emailchecker
         }
         public void SaveFile()
         {
-            Configuration configuration =
-            ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            Save_File outputFile = new Save_File();
 
-            wb.SaveAs(textBox1.Text + " - Resultado", outputFile.fileFormat);
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            wb.SaveAs(textBox2.Text + @"\Resultado",51);
             wb.Close();
         }
         public int LastRow()
@@ -269,20 +267,97 @@ namespace emailchecker
                 }
             }
         }
+        public void convertInputFile()
+        {
+            Convert_File cf = new Convert_File();
+
+            cf.fullPathOriginFile = textBox1.Text;
+            cf.fileExtension = cf.fullPathOriginFile.Substring(cf.fullPathOriginFile.Length - 4, 4);
+            cf.outputFileExtension = ".xlsx";
+            cf.directoryName = "converting";
+            cf.convertedFileName = @"\converting";
+            cf.fullDirectoryName = Path.GetPathRoot(Environment.SystemDirectory) + cf.directoryName;
+            cf.fullPathConvertingFile = $"{cf.fullDirectoryName}{cf.convertedFileName}{cf.fileExtension}";
+            cf.fullPathConvertedFile = $"{cf.fullDirectoryName}{cf.convertedFileName}{cf.outputFileExtension}";
+
+            //checking / creating work directory
+            if (Directory.Exists(cf.fullDirectoryName))
+            {
+                Directory.Delete(cf.fullDirectoryName, true);
+                Directory.CreateDirectory(cf.fullDirectoryName);
+                File.Copy(cf.fullPathOriginFile, cf.fullPathConvertingFile, true);
+            }
+            else
+            {
+                Directory.CreateDirectory(cf.fullDirectoryName);
+                File.Copy(cf.fullPathOriginFile, cf.fullPathConvertingFile, true);
+            }
+
+
+            // >>>>>>>> run python here <<<<<<<
+            string exePath = System.AppDomain.CurrentDomain.BaseDirectory + @"csvconversor.exe";
+
+            Process pro = new Process();
+            pro.StartInfo.FileName = exePath;
+            pro.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+
+            pro.Start();
+
+
+
+
+
+            //checking if converted file already exists
+            int timeElapsed = 0;
+        loop1:
+            Thread.Sleep(1000);
+            foreach (string file in Directory.GetFiles(cf.fullDirectoryName))
+            {
+                if (file.Contains("xlsx") || file.Contains("xls"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (timeElapsed < 30)
+                    {
+                        timeElapsed++;
+                        goto loop1;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Arquivo convertido não existe, o programa será fechado.", "Erro", 
+                                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+
+                    }
+                }
+            }
+            try
+            {
+                pro.CloseMainWindow();
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+                          
+        }
         public Form1(string path, int Sheet)
         {
             wb = excel.Workbooks.Open(path);
             ws = wb.Worksheets[Sheet];
         }
-        void Execution()
+        public void Execution()
         {
-
+            
             label3.Text = "Status: Analisando...";
 
             getexcelprocesses();
             
             // getting input file name
-            Form1 excel = new Form1(textBox1.Text, 1); 
+            Form1 excel = new Form1(textBox1.Text, 1);
+            
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             //finding head row
@@ -351,7 +426,9 @@ namespace emailchecker
             textBox2.Enabled = true; progressBar1.Enabled = false; label3.Enabled = false;
             label3.Text = "Status: Pronto!";
 
-            SaveFile();
+            excel.wb.SaveAs(textBox2.Text + @"\Resultado", 51);
+            excel.wb.Close();
+            //SaveFile();
 
             killExcelProcesses();
         }

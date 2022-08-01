@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "emailchecker", "emailchecke
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "csvconversor", "csvconversor\csvconversor.pyproj", "{5DEDA907-4ED0-4025-9D05-16AD3BDEB0A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my_tests", "my_tests\my_tests.csproj", "{C10D5A7A-DE35-4633-8E6D-90A88AF17423}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{52809962-D5DE-4353-892D-4E5C4152B3FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5DEDA907-4ED0-4025-9D05-16AD3BDEB0A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5DEDA907-4ED0-4025-9D05-16AD3BDEB0A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C10D5A7A-DE35-4633-8E6D-90A88AF17423}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C10D5A7A-DE35-4633-8E6D-90A88AF17423}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C10D5A7A-DE35-4633-8E6D-90A88AF17423}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C10D5A7A-DE35-4633-8E6D-90A88AF17423}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

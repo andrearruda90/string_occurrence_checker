@@ -19,19 +19,32 @@ using emailchecker;
 
 namespace emailchecker
 {
-    public class Open_File
-    {
-        public string filter = "csv files (*.csv)|*.csv|xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)|*.xls";
-        public string fileName;
-        public string fileExtension;
-        public string directoryPath;
-        public string fullPath;
-    }
-    public class Save_File
-    {
-        public string fileName;
-        public string directoryPath;
-        public int fileFormat = 51;
-    }
+        public class Open_File
+        {
+            public string filter = "csv files (*.csv)|*.csv|xlsx files (*.xlsx)|*.xlsx|xls files (*.xls)|*.xls";
+            public string fileName;
+            public string fileExtension;
+            public string directoryPath;
+            public string fullPath;
+        }
+        public class Save_File
+        {
+            public string fileName;
+            public string directoryPath;
+            public int fileFormat = 51;
+        }
 
+        public class Convert_File
+        {
+            public string fileName;
+            public string fileExtension;
+            public string outputFileExtension;
+            public string fullPathOriginFile;
+            public string fullPathFile;
+            public string convertedFileName;
+            public string fullPathConvertedFile;
+            public string fullPathConvertingFile;
+            public string directoryName;
+            public string fullDirectoryName;
+        }
 }
