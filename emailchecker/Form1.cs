@@ -231,7 +231,7 @@ namespace emailchecker
         public int LastColumn()
         {
             _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("B1", last);
+            _Excel.Range range = ws.get_Range("A1", last);
 
             int lastUsedcolumn = last.Column;
 
@@ -279,6 +279,9 @@ namespace emailchecker
             cf.fullDirectoryName = Path.GetPathRoot(Environment.SystemDirectory) + cf.directoryName;
             cf.fullPathConvertingFile = $"{cf.fullDirectoryName}{cf.convertedFileName}{cf.fileExtension}";
             cf.fullPathConvertedFile = $"{cf.fullDirectoryName}{cf.convertedFileName}{cf.outputFileExtension}";
+
+
+            
 
             //checking / creating work directory
             if (Directory.Exists(cf.fullDirectoryName))
@@ -362,7 +365,7 @@ namespace emailchecker
 
             //finding head row
             int headRow = 0;
-            for (int x = 0; x < 1000; x++)
+            for (int x = 1; x < 1000; x++)
             {
                 if (excel.ReadCell(x, 0).ToString() != "" && excel.ReadCell(x, 0).ToString() != "SA1") //where 2 equals row 3
                 {
@@ -370,6 +373,8 @@ namespace emailchecker
                     break;
                 }
             }
+
+            MessageBox.Show(headRow.ToString());
             //finding the e-mail column
             int targetColumn = 0;
             for (int i = 0; i <= excel.LastColumn(); i++)
@@ -380,7 +385,7 @@ namespace emailchecker
                     break;
                 }
             }
-
+            MessageBox.Show(targetColumn.ToString());   
             //passing every listview1.Item to a new string list
 
             var listItem = new List<string>();
