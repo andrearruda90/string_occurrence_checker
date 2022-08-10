@@ -97,7 +97,6 @@ C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\System.Nu
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\Tensorflow.Binding.xml
-C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.exe.config
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.Fody.CopyLocal.cache
 C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.dll
 C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.Interfaces.dll
@@ -105,3 +104,9 @@ C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.System.Dr
 C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.xml
 C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\EPPlus.dll
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\EPPlus.Interfaces.dll
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\EPPlus.System.Drawing.dll
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\EPPlus.xml
+C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml

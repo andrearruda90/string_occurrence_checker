@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using OfficeOpenXml;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Text;
+using System.Threading.Tasks;
 
 
 
@@ -55,18 +58,15 @@ namespace emailchecker
         {
             try
             {
-                Open_File inputFile = new Open_File();
-                Save_File outputFile = new Save_File();
-
-                ofd.Filter = inputFile.filter;
+                ofd.Filter = "xlsx files (*.xlsx)|*.xlsx";
                 ofd.ShowDialog();
 
-                inputFile.fileName = Path.GetFileName(ofd.FileName);
-                inputFile.fullPath = Path.GetFullPath(ofd.FileName);
-                outputFile.directoryPath = inputFile.fullPath.Replace($@"\{inputFile.fileName}", "");
+                string fileName = Path.GetFileName(ofd.FileName);
+                string fullPath = Path.GetFullPath(ofd.FileName);
+                string directoryPath = fullPath.Replace($@"\{fileName}", "");
 
-                textBox1.Text = inputFile.fullPath;
-                textBox2.Text = outputFile.directoryPath;
+                textBox1.Text = fullPath;
+                textBox2.Text = directoryPath;
 
                 if (ofd.FileName.EndsWith(".csv") == false)
                 {
@@ -91,13 +91,8 @@ namespace emailchecker
         {
             try
             {
-                Save_File outputFile = new Save_File();
-
                 fbd.ShowDialog();
-
-                outputFile.directoryPath = fbd.SelectedPath.ToString();
-                textBox2.Text = outputFile.directoryPath;
-
+                textBox2.Text = fbd.SelectedPath.ToString();
             }
             catch (Exception)
             {
@@ -224,17 +219,9 @@ namespace emailchecker
 
             //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
             // path to your excel file
+               string path = textBox1.Text;
 
-            string path = null;
-            if (textBox1.Text.EndsWith(".csv"))
-            {
-                convertInputFile();
-                path = Path.GetPathRoot(Environment.SystemDirectory) + @"converting\converted.xlsx";
-            }
-            else
-            {
-                path = textBox1.Text;
-            }
+
             FileInfo fileInfo = new FileInfo(path);
 
             ExcelPackage package = new ExcelPackage(fileInfo);
@@ -300,15 +287,7 @@ namespace emailchecker
             try
             {
                 // save changes
-                if (textBox1.Text.EndsWith(".csv"))
-                {
-                    package.SaveAs(textBox2.Text);
-                }
-                else
-                {
-                    package.Save();
-                }
-
+                package.Save();
             }
             catch (Exception)
             {
@@ -322,86 +301,6 @@ namespace emailchecker
             MessageBox.Show("Processo Finalilzado!", "Finalizado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             button1.Enabled = true; button2.Enabled = true; button3.Enabled = true; textBox1.Enabled = true;
             textBox2.Enabled = true; progressBar1.Enabled = false; label3.Enabled = false;
-
-
-        }
-        public void convertInputFile()
-        {
-            string fullPathOriginFile = textBox1.Text;
-            string fileExtension = fullPathOriginFile.Substring(fullPathOriginFile.Length - 4, 4);
-            string outputFileExtension = ".xlsx";
-            string directoryName = "converting";
-            string convertedFileName = @"\converting";
-            string fullDirectoryName = Path.GetPathRoot(Environment.SystemDirectory) + directoryName;
-            string fullPathConvertingFile = $"{fullDirectoryName}{convertedFileName}{fileExtension}";
-            string fullPathConvertedFile = $"{fullDirectoryName}{convertedFileName}{outputFileExtension}";
-
-
-
-
-            //checking / creating work directory
-            if (Directory.Exists(fullDirectoryName))
-            {
-                Directory.Delete(fullDirectoryName, true);
-                Directory.CreateDirectory(fullDirectoryName);
-                File.Copy(fullPathOriginFile, fullPathConvertingFile, true);
-                Thread.Sleep(5000);
-            }
-            else
-            {
-                Directory.CreateDirectory(fullDirectoryName);
-                File.Copy(fullPathOriginFile, fullPathConvertingFile, true);
-                Thread.Sleep(5000);
-            }
-
-
-            // >>>>>>>> run python here <<<<<<<
-            string exePath = System.AppDomain.CurrentDomain.BaseDirectory + @"csvconversor.exe";
-
-            Process pro = new Process();
-            pro.StartInfo.FileName = exePath;
-            pro.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-
-            pro.Start();
-
-
-
-
-
-            //checking if converted file already exists
-            int timeElapsed = 0;
-        loop1:
-            Thread.Sleep(1000);
-            foreach (string file in Directory.GetFiles(fullDirectoryName))
-            {
-                if (file.EndsWith(".xlsx") || file.EndsWith(".xls"))
-                {
-                    break;
-                }
-                else
-                {
-                    if (timeElapsed < 30)
-                    {
-                        timeElapsed++;
-                        goto loop1;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Arquivo convertido não existe, o programa será fechado.", "Erro",
-                                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close();
-
-                    }
-                }
-            }
-            try
-            {
-                pro.CloseMainWindow();
-            }
-            catch (Exception)
-            {
-                //throw;
-            }
         }
     }
 }
