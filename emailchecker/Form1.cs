@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using OfficeOpenXml;
 
@@ -19,7 +21,7 @@ namespace emailchecker
             InitializeComponent();
         }
         private void Form1_Load(object sender, EventArgs e)
-        {   
+        {
 
             this.Text = "Verificador de E-mails";
 
@@ -29,8 +31,8 @@ namespace emailchecker
             this.MaximizeBox = false;
 
             tabPage1.Text = "Analisar"; tabPage2.Text = "Opções"; button1.Text = "Buscar";
-            label1.Text = "Arquivo Origem"; label3.Text = "Status: Aguardando";label3.Enabled = false; label4.Text = "";
-            button2.Text = "Buscar";label2.Text = "Destino"; button3.Text = "Analisar";button4.Text = "Adicionar";
+            label1.Text = "Arquivo Origem"; label3.Text = "Status: Aguardando"; label3.Enabled = false; label4.Text = "";
+            button2.Text = "Buscar"; label2.Text = "Destino"; button3.Text = "Analisar"; button4.Text = "Adicionar";
             button5.Text = "Remover"; groupBox1.Text = "Considerar os itens abaixo:"; groupBox2.Text = "Adicionar/Remover";
 
             progressBar1.Enabled = false;
@@ -80,20 +82,20 @@ namespace emailchecker
             }
             catch (Exception)
             {
-                
+
                 //throw;
             }
-            
+
         }
         public void button2_Click(object sender, EventArgs e)
         {
             try
             {
                 Save_File outputFile = new Save_File();
-                
+
                 fbd.ShowDialog();
-                
-                outputFile.directoryPath =fbd.SelectedPath.ToString();
+
+                outputFile.directoryPath = fbd.SelectedPath.ToString();
                 textBox2.Text = outputFile.directoryPath;
 
             }
@@ -102,7 +104,7 @@ namespace emailchecker
 
                 //throw;
             }
-            
+
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -112,21 +114,21 @@ namespace emailchecker
                 if (File.Exists(textBox1.Text) == false || Directory.Exists(textBox2.Text) == false)
                 {
                     MessageBox.Show("Insira Arquivo e Diretório Válido nos campos acima!", "Campo Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    
-                }   
+
+                }
                 else
                 {
                     button1.Enabled = false; button2.Enabled = false; button3.Enabled = false; textBox1.Enabled = false;
                     textBox2.Enabled = false; progressBar1.Enabled = true; label3.Enabled = true;
                     Execution();
-                }               
+                }
             }
             catch (Exception)
             {
                 return;
-               // throw;
+                // throw;
             }
-          
+
         }
         private void button4_Click(object sender, EventArgs e)
         {
@@ -135,7 +137,7 @@ namespace emailchecker
                 listView1.Items.Add(textBox3.Text);
                 SaveLstvwItems();
                 textBox3.Text = "";
-                
+
             }
             else
                 MessageBox.Show("Digite a palavra-chave primeiro.", "Campo Vazio", MessageBoxButtons.OK,
@@ -143,9 +145,9 @@ namespace emailchecker
         }
         private void button5_Click(object sender, EventArgs e)
         {
-            
+
             if (listView1.SelectedItems.Count != 0)
-            {       
+            {
                 DialogResult question = MessageBox.Show($"Remover \"{listView1.SelectedItems[0].Text}\" da lista?", "Confirmação", MessageBoxButtons.YesNo,
                                                                                                          MessageBoxIcon.Question);
                 if (question == DialogResult.Yes)
@@ -162,15 +164,15 @@ namespace emailchecker
                     //do something else
                 }
 
-                
+
             }
             else
             {
                 MessageBox.Show("Selecione um item primeiro!", "Sem seleção", MessageBoxButtons.OK,
                                                                               MessageBoxIcon.Exclamation);
             }
-            
-            
+
+
         }
         private void SaveLstvwItems()
         {
@@ -203,7 +205,7 @@ namespace emailchecker
             }
         }
 
-     
+
         public void Execution()
         {
             //// according to the Polyform Noncommercial license: (Needed)
@@ -222,7 +224,17 @@ namespace emailchecker
 
             //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
             // path to your excel file
-            string path = textBox1.Text;
+
+            string path = null;
+            if (textBox1.Text.EndsWith(".csv"))
+            {
+                convertInputFile();
+                path = Path.GetPathRoot(Environment.SystemDirectory) + @"converting\converted.xlsx";
+            }
+            else
+            {
+                path = textBox1.Text;
+            }
             FileInfo fileInfo = new FileInfo(path);
 
             ExcelPackage package = new ExcelPackage(fileInfo);
@@ -264,18 +276,18 @@ namespace emailchecker
                     goto exit2;
                 }
             }
-            exit2:
+        exit2:
             //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
 
             // loop through the worksheet rows
-            for (int row = headRow +1; row <= rows; row++)
+            for (int row = headRow + 1; row <= rows; row++)
             {
                 int column = targertColumn;
                 ExcelRange cel = worksheet.Cells[row, column];
                 string celValue = cel.Value == null ? string.Empty : cel.Value.ToString();
 
-                foreach(string argument in listItem)
+                foreach (string argument in listItem)
                 {
                     if (listItem.Any(s => celValue.Contains(s)) == true || celValue.Contains("@") == false || celValue == "")
                     {
@@ -288,7 +300,15 @@ namespace emailchecker
             try
             {
                 // save changes
-                package.Save();
+                if (textBox1.Text.EndsWith(".csv"))
+                {
+                    package.SaveAs(textBox2.Text);
+                }
+                else
+                {
+                    package.Save();
+                }
+
             }
             catch (Exception)
             {
@@ -304,6 +324,84 @@ namespace emailchecker
             textBox2.Enabled = true; progressBar1.Enabled = false; label3.Enabled = false;
 
 
+        }
+        public void convertInputFile()
+        {
+            string fullPathOriginFile = textBox1.Text;
+            string fileExtension = fullPathOriginFile.Substring(fullPathOriginFile.Length - 4, 4);
+            string outputFileExtension = ".xlsx";
+            string directoryName = "converting";
+            string convertedFileName = @"\converting";
+            string fullDirectoryName = Path.GetPathRoot(Environment.SystemDirectory) + directoryName;
+            string fullPathConvertingFile = $"{fullDirectoryName}{convertedFileName}{fileExtension}";
+            string fullPathConvertedFile = $"{fullDirectoryName}{convertedFileName}{outputFileExtension}";
+
+
+
+
+            //checking / creating work directory
+            if (Directory.Exists(fullDirectoryName))
+            {
+                Directory.Delete(fullDirectoryName, true);
+                Directory.CreateDirectory(fullDirectoryName);
+                File.Copy(fullPathOriginFile, fullPathConvertingFile, true);
+                Thread.Sleep(5000);
+            }
+            else
+            {
+                Directory.CreateDirectory(fullDirectoryName);
+                File.Copy(fullPathOriginFile, fullPathConvertingFile, true);
+                Thread.Sleep(5000);
+            }
+
+
+            // >>>>>>>> run python here <<<<<<<
+            string exePath = System.AppDomain.CurrentDomain.BaseDirectory + @"csvconversor.exe";
+
+            Process pro = new Process();
+            pro.StartInfo.FileName = exePath;
+            pro.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+
+            pro.Start();
+
+
+
+
+
+            //checking if converted file already exists
+            int timeElapsed = 0;
+        loop1:
+            Thread.Sleep(1000);
+            foreach (string file in Directory.GetFiles(fullDirectoryName))
+            {
+                if (file.EndsWith(".xlsx") || file.EndsWith(".xls"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (timeElapsed < 30)
+                    {
+                        timeElapsed++;
+                        goto loop1;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Arquivo convertido não existe, o programa será fechado.", "Erro",
+                                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+
+                    }
+                }
+            }
+            try
+            {
+                pro.CloseMainWindow();
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
         }
     }
 }
