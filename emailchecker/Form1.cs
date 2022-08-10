@@ -9,8 +9,7 @@ using OfficeOpenXml;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Text;
 using System.Threading.Tasks;
-
-
+using System.Configuration;
 
 namespace emailchecker
 {
@@ -18,6 +17,8 @@ namespace emailchecker
     {
         public OpenFileDialog ofd = new OpenFileDialog();
         public FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+        Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
         public Form1() //metodo construtor
         {
@@ -33,11 +34,12 @@ namespace emailchecker
 
             this.MaximizeBox = false;
 
+            textBox2.Text = configuration.AppSettings.Settings["referCol"].Value;
+
             tabPage1.Text = "Analisar"; tabPage2.Text = "Opções"; button1.Text = "Buscar";
             label1.Text = "Arquivo Origem"; label3.Text = "Status: Aguardando"; label3.Enabled = false; label4.Text = "";
-            button2.Text = "Buscar"; label2.Text = "Destino"; button3.Text = "Analisar"; button4.Text = "Adicionar";
-            button5.Text = "Remover"; groupBox1.Text = "Considerar os itens abaixo:"; groupBox2.Text = "Adicionar/Remover";
-
+            button3.Text = "Analisar"; button4.Text = "Adicionar";button5.Text = "Remover"; groupBox1.Text = "Considerar os itens abaixo:"; groupBox2.Text = "Adicionar/Remover";
+            groupBox5.Text = "Coluna referência"; button2.Text = "Salvar";
             progressBar1.Enabled = false;
 
 
@@ -66,18 +68,6 @@ namespace emailchecker
                 string directoryPath = fullPath.Replace($@"\{fileName}", "");
 
                 textBox1.Text = fullPath;
-                textBox2.Text = directoryPath;
-
-                if (ofd.FileName.EndsWith(".csv") == false)
-                {
-                    textBox2.Enabled = false;
-                }
-                else
-                {
-                    textBox2.Enabled = true;
-                }
-
-
 
             }
             catch (Exception)
@@ -91,8 +81,8 @@ namespace emailchecker
         {
             try
             {
-                fbd.ShowDialog();
-                textBox2.Text = fbd.SelectedPath.ToString();
+               // fbd.ShowDialog();
+                //textBox2.Text = fbd.SelectedPath.ToString();
             }
             catch (Exception)
             {
@@ -105,16 +95,17 @@ namespace emailchecker
         {
             try
             {
+                label3.Text = "Status: Analisando";
+                progressBar1.Value = 0;
                 //checking if both textboxs have valid path
-                if (File.Exists(textBox1.Text) == false || Directory.Exists(textBox2.Text) == false)
+                if (File.Exists(textBox1.Text) == false)
                 {
                     MessageBox.Show("Insira Arquivo e Diretório Válido nos campos acima!", "Campo Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
                 else
                 {
-                    button1.Enabled = false; button2.Enabled = false; button3.Enabled = false; textBox1.Enabled = false;
-                    textBox2.Enabled = false; progressBar1.Enabled = true; label3.Enabled = true;
+                    button3.Enabled = false; textBox1.Enabled = false; progressBar1.Enabled = true; label3.Enabled = true;
                     Execution();
                 }
             }
@@ -257,12 +248,16 @@ namespace emailchecker
             {
                 ExcelRange cel2 = worksheet.Cells[headRow, col];
                 string celValue2 = cel2.Value == null ? string.Empty : cel2.Value.ToString();
-                if (celValue2.Contains("mail"))
+                if (celValue2.ToLower() == textBox2.Text.ToLower())
                 {
                     targertColumn = col;
                     goto exit2;
                 }
             }
+
+            MessageBox.Show("Coluna referência não Encontrada.", "Não Encontrado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            goto endMessage;
+
         exit2:
             //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
@@ -295,12 +290,15 @@ namespace emailchecker
             }
             //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
-
-            //End Message
-            label3.Text = "Completo!";
             MessageBox.Show("Processo Finalilzado!", "Finalizado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            button1.Enabled = true; button2.Enabled = true; button3.Enabled = true; textBox1.Enabled = true;
-            textBox2.Enabled = true; progressBar1.Enabled = false; label3.Enabled = false;
+            endMessage:
+            label3.Text = "Status: Completo!";
+            button1.Enabled = true;button3.Enabled = true; textBox1.Enabled = true;progressBar1.Enabled = false; label3.Enabled = false;
+        }
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            configuration.AppSettings.Settings["referCol"].Value = textBox2.Text;
+            configuration.Save(ConfigurationSaveMode.Full, true);
         }
     }
 }

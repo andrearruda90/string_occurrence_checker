@@ -187,7 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Checklist.txt" />
-    <Content Include="csvconversor.exe" />
     <Content Include="search-results.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
