@@ -27,7 +27,7 @@ namespace emailchecker
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            this.Text = "Verificador de E-mails";
+            this.Text = "Verificador de ocorências de string - por André Arruda";
 
             //disable resize window
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
