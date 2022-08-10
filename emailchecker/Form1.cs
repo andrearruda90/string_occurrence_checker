@@ -3,25 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Microsoft.Office.Interop.Excel;
-using _Excel = Microsoft.Office.Interop.Excel;
-using System.Diagnostics;
-using System.Configuration;
-using System.Threading;
-using System.Diagnostics;
+using OfficeOpenXml;
+
+
 
 namespace emailchecker
 {
     public partial class Form1 : Form
     {
-        _Application excel = new _Excel.Application();
-        Workbook wb;
-        Worksheet ws;
-
         public OpenFileDialog ofd = new OpenFileDialog();
         public FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-        public Form1()
+        public Form1() //metodo construtor
         {
             InitializeComponent();
         }
@@ -73,6 +66,15 @@ namespace emailchecker
                 textBox1.Text = inputFile.fullPath;
                 textBox2.Text = outputFile.directoryPath;
 
+                if (ofd.FileName.EndsWith(".csv") == false)
+                {
+                    textBox2.Enabled = false;
+                }
+                else
+                {
+                    textBox2.Enabled = true;
+                }
+
 
 
             }
@@ -104,20 +106,27 @@ namespace emailchecker
         }
         private void button3_Click(object sender, EventArgs e)
         {
-            //checking if both textboxs have valid path
-            if (File.Exists(textBox1.Text) == false || Directory.Exists(textBox2.Text) == false)
+            try
             {
-                MessageBox.Show("Insira Arquivo e Diretório Válido nos campos acima!","Campo Inválido",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                //checking if both textboxs have valid path
+                if (File.Exists(textBox1.Text) == false || Directory.Exists(textBox2.Text) == false)
+                {
+                    MessageBox.Show("Insira Arquivo e Diretório Válido nos campos acima!", "Campo Inválido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                }   
+                else
+                {
+                    button1.Enabled = false; button2.Enabled = false; button3.Enabled = false; textBox1.Enabled = false;
+                    textBox2.Enabled = false; progressBar1.Enabled = true; label3.Enabled = true;
+                    Execution();
+                }               
             }
-            else
+            catch (Exception)
             {
-                button1.Enabled = false; button2.Enabled = false; button3.Enabled = false; textBox1.Enabled = false;
-                textBox2.Enabled = false; progressBar1.Enabled = true; label3.Enabled = true;
-                
+                return;
+               // throw;
             }
-
-            convertInputFile();
-            Execution();
+          
         }
         private void button4_Click(object sender, EventArgs e)
         {
@@ -193,199 +202,15 @@ namespace emailchecker
                 listView1.Items.Add(strAllLines[i]);
             }
         }
-        public string ReadCell(int i, int j)
-        {
-            i++;
-            j++;
 
-            if (ws.Cells[i, j].Value2 != null)
-                return ws.Cells[i, j].Value2.ToString();
-            else
-                return "";
-        }
-        public string WriteCell(string k, int i, int j)
-        {
-            i++;
-            j++;
-
-            ws.Cells[i, j].Value2 = k;
-            ws.Cells[i, j].Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
-
-            return k;
-        }
-        public void SaveFile()
-        {
-
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            wb.SaveAs(textBox2.Text + @"\Resultado",51);
-            wb.Close();
-        }
-        public int LastRow()
-        {
-            _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("A1", last);
-
-            int lastUsedRow = last.Row;
-            return lastUsedRow;
-        }
-        public int LastColumn()
-        {
-            _Excel.Range last = ws.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            _Excel.Range range = ws.get_Range("A1", last);
-
-            int lastUsedcolumn = last.Column;
-
-            return lastUsedcolumn;
-        }
-        public void getexcelprocesses()
-        {
-
-
-            Process[] safeProcess = Process.GetProcessesByName("EXCEL");
-            foreach (Process p in safeProcess)
-            {
-                process.Add(p.Id);
-            }
-        }
-        public void killExcelProcesses()
-        {
-            Process[] killProcess = Process.GetProcessesByName("EXCEL");
-            foreach (Process p2 in killProcess)
-            {
-                int countp = 0;
-                foreach (var i in process)
-                {
-                    if (p2.Id == i)
-                    {
-                        countp++;
-                    }
-                }
-
-                if (countp == 0)
-                {
-                    p2.Kill();
-                }
-            }
-        }
-        public void convertInputFile()
-        {
-            Convert_File cf = new Convert_File();
-
-            cf.fullPathOriginFile = textBox1.Text;
-            cf.fileExtension = cf.fullPathOriginFile.Substring(cf.fullPathOriginFile.Length - 4, 4);
-            cf.outputFileExtension = ".xlsx";
-            cf.directoryName = "converting";
-            cf.convertedFileName = @"\converting";
-            cf.fullDirectoryName = Path.GetPathRoot(Environment.SystemDirectory) + cf.directoryName;
-            cf.fullPathConvertingFile = $"{cf.fullDirectoryName}{cf.convertedFileName}{cf.fileExtension}";
-            cf.fullPathConvertedFile = $"{cf.fullDirectoryName}{cf.convertedFileName}{cf.outputFileExtension}";
-
-
-            
-
-            //checking / creating work directory
-            if (Directory.Exists(cf.fullDirectoryName))
-            {
-                Directory.Delete(cf.fullDirectoryName, true);
-                Directory.CreateDirectory(cf.fullDirectoryName);
-                File.Copy(cf.fullPathOriginFile, cf.fullPathConvertingFile, true);
-            }
-            else
-            {
-                Directory.CreateDirectory(cf.fullDirectoryName);
-                File.Copy(cf.fullPathOriginFile, cf.fullPathConvertingFile, true);
-            }
-
-
-            // >>>>>>>> run python here <<<<<<<
-            string exePath = System.AppDomain.CurrentDomain.BaseDirectory + @"csvconversor.exe";
-
-            Process pro = new Process();
-            pro.StartInfo.FileName = exePath;
-            pro.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-
-            pro.Start();
-
-
-
-
-
-            //checking if converted file already exists
-            int timeElapsed = 0;
-        loop1:
-            Thread.Sleep(1000);
-            foreach (string file in Directory.GetFiles(cf.fullDirectoryName))
-            {
-                if (file.Contains("xlsx") || file.Contains("xls"))
-                {
-                    break;
-                }
-                else
-                {
-                    if (timeElapsed < 30)
-                    {
-                        timeElapsed++;
-                        goto loop1;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Arquivo convertido não existe, o programa será fechado.", "Erro", 
-                                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.Close();
-
-                    }
-                }
-            }
-            try
-            {
-                pro.CloseMainWindow();
-            }
-            catch (Exception)
-            {
-                //throw;
-            }
-                          
-        }
-        public Form1(string path, int Sheet)
-        {
-            wb = excel.Workbooks.Open(path);
-            ws = wb.Worksheets[Sheet];
-        }
+     
         public void Execution()
         {
-            
+            //// according to the Polyform Noncommercial license: (Needed)
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             label3.Text = "Status: Analisando...";
 
-            getexcelprocesses();
-            
-            // getting input file name
-            Form1 excel = new Form1(Path.GetPathRoot(Environment.SystemDirectory) + @"converting\converted.xlsx" , 1);
-            
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-            //finding head row
-            int headRow = 0;
-            for (int x = 1; x < 1000; x++)
-            {
-                if (excel.ReadCell(x, 0).ToString() != "" && excel.ReadCell(x, 0).ToString() != "SA1") //where 2 equals row 3
-                {
-                    headRow = x;
-                    break;
-                }
-            }
-
-            MessageBox.Show(headRow.ToString());
-            //finding the e-mail column
-            int targetColumn = 0;
-            for (int i = 0; i <= excel.LastColumn(); i++)
-            {
-                if (excel.ReadCell(headRow, i).Contains("mail") == true) //where 2 equals row 3
-                {
-                    targetColumn = i;
-                    break;
-                }
-            }
-            MessageBox.Show(targetColumn.ToString());   
             //passing every listview1.Item to a new string list
 
             var listItem = new List<string>();
@@ -395,46 +220,91 @@ namespace emailchecker
                 listItem.Add(lisViewItem.Text.ToLower());
             }
 
-            int count = headRow + 1;
-            progressBar1.Maximum = excel.LastRow();
+            //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+            // path to your excel file
+            string path = textBox1.Text;
+            FileInfo fileInfo = new FileInfo(path);
 
-            int pb = count;
-            
-            //filling fields
-            while (count <= excel.LastRow())
+            ExcelPackage package = new ExcelPackage(fileInfo);
+            ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
+            // get number of rows in the sheet
+            int rows = worksheet.Dimension.Rows;
+            progressBar1.Maximum = rows;
+
+
+            //defining headRow
+            //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+            int headRow = 0;
+            for (int row = 1; row <= rows; row++)
             {
-
-                if (listItem.Any(s => excel.ReadCell(count, targetColumn).ToString().Contains(s)) == true ||
-                    excel.ReadCell(count, targetColumn).Contains("@") == false || excel.ReadCell(count, targetColumn).ToString() == "")
+                ExcelRange cel = worksheet.Cells[row, 1];
+                string celValue = cel.Value == null ? string.Empty : cel.Value.ToString();
+                if (celValue != "SA1" && celValue != "")
                 {
-                    excel.WriteCell(excel.ReadCell(count, targetColumn), count, targetColumn); //WriteCell(value,line,column)
+                    headRow = row;
+                    goto exit1;
                 }
-                count++;
-
-                if (progressBar1.Value == progressBar1.Maximum)
-                {
-                    break;
-                }
-                else
-                {
-                    pb++;
-                    progressBar1.Value = pb;
-                }
-
             }
+        exit1:
+            //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+            //targetColumn aqui
+            //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+            int targertColumn = 0;
+            int columns = worksheet.Dimension.Columns;
+
+            for (int col = 1; col < columns; col++)
+            {
+                ExcelRange cel2 = worksheet.Cells[headRow, col];
+                string celValue2 = cel2.Value == null ? string.Empty : cel2.Value.ToString();
+                if (celValue2.Contains("mail"))
+                {
+                    targertColumn = col;
+                    goto exit2;
+                }
+            }
+            exit2:
+            //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+
+            // loop through the worksheet rows
+            for (int row = headRow +1; row <= rows; row++)
+            {
+                int column = targertColumn;
+                ExcelRange cel = worksheet.Cells[row, column];
+                string celValue = cel.Value == null ? string.Empty : cel.Value.ToString();
+
+                foreach(string argument in listItem)
+                {
+                    if (listItem.Any(s => celValue.Contains(s)) == true || celValue.Contains("@") == false || celValue == "")
+                    {
+                        cel.Style.Font.Color.SetColor(0, 255, 0, 0); // see rgb table online
+                        progressBar1.Value = row;
+                    }
+                }
+            }
+
+            try
+            {
+                // save changes
+                package.Save();
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+            //_-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-__-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+
             //End Message
+            label3.Text = "Completo!";
             MessageBox.Show("Processo Finalilzado!", "Finalizado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             button1.Enabled = true; button2.Enabled = true; button3.Enabled = true; textBox1.Enabled = true;
             textBox2.Enabled = true; progressBar1.Enabled = false; label3.Enabled = false;
-            label3.Text = "Status: Pronto!";
 
-            excel.wb.SaveAs(textBox2.Text + @"\Resultado", 51);
-            excel.wb.Close();
-            //SaveFile();
 
-            killExcelProcesses();
         }
-
     }
 }
 

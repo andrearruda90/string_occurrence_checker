@@ -55,7 +55,6 @@ C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\System.Threading
 C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\Tensorflow.Binding.xml
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.AssemblyReference.cache
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.SuggestedBindingRedirects.cache
-C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.exe.config
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\Interop.Microsoft.Office.Interop.Excel.dll
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.ResolveComReference.cache
 C:\Users\andre\source\repos\emailchecker\emailchecker\obj\Debug\emailchecker.Form1.resources
@@ -100,3 +99,9 @@ C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\System.Th
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\bin\Debug\Tensorflow.Binding.xml
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.exe.config
 C:\Users\andre.arruda\Source\Repos\emailchecker\emailchecker\obj\Debug\emailchecker.csproj.Fody.CopyLocal.cache
+C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.dll
+C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.Interfaces.dll
+C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.System.Drawing.dll
+C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\EPPlus.xml
+C:\Users\andre\source\repos\emailchecker\emailchecker\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml

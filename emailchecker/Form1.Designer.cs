@@ -85,11 +85,11 @@ namespace emailchecker
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.Color.Snow;
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -135,14 +135,15 @@ namespace emailchecker
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
+            this.groupBox4.BackColor = System.Drawing.Color.Snow;
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.progressBar1);
@@ -175,6 +176,7 @@ namespace emailchecker
             // 
             // groupBox3
             // 
+            this.groupBox3.BackColor = System.Drawing.Color.Snow;
             this.groupBox3.Controls.Add(this.button2);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.textBox2);
@@ -231,6 +233,7 @@ namespace emailchecker
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -262,6 +265,7 @@ namespace emailchecker
         public System.Windows.Forms.Label label3;
         public ProgressBar progressBar1;
         public System.Windows.Forms.Button button3;
+        public TabControl tabControl1;
         public System.Windows.Forms.GroupBox groupBox3;
         public System.Windows.Forms.Button button2;
         public System.Windows.Forms.Label label2;
@@ -269,7 +273,6 @@ namespace emailchecker
         public System.Windows.Forms.TextBox textBox1;
         public System.Windows.Forms.Button button1;
         public System.Windows.Forms.Label label1;
-        public TabControl tabControl1;
     }
 
 }
